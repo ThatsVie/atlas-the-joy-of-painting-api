@@ -1,4 +1,11 @@
+
+<div align="center">
+
+![puggybobross](https://github.com/user-attachments/assets/d1bb444f-7b7b-4e51-a6b3-b957f16d9f54)
+
+
 # ETL: The Joy of Coding
+</div>
 
 ## Overview
 This project explores the ETL (Extract, Transform, Load) process to consolidate data from multiple sources into a centralized database for The Joy of Painting episodes. The goal is to create a database and API that allows users to filter the 403 episodes based on:
@@ -8,6 +15,8 @@ This project explores the ETL (Extract, Transform, Load) process to consolidate 
 - **Color Palette**
 
 This will enable users to discover episodes aligned with their interests, whether it’s paintings done during a specific month, episodes featuring specific subjects, or those showcasing particular colors.
+
+
 
 ## Curriculum Instructions
 
