@@ -1,7 +1,7 @@
 
 <div align="center">
 
-![puggybobross](https://github.com/user-attachments/assets/d1bb444f-7b7b-4e51-a6b3-b957f16d9f54)
+![bobrosspuggiewiggie](https://github.com/user-attachments/assets/5ffd4c1b-1c16-4639-8dda-09fb06ebbe9b)
 
 
 # ETL: The Joy of Coding
