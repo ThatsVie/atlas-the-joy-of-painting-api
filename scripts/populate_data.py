@@ -7,7 +7,11 @@ import os
 load_dotenv()
 
 # MongoDB connection
-client = MongoClient(os.getenv("MONGODB_URI"))
+MONGODB_URI = os.getenv("MONGODB_URI")
+if not MONGODB_URI:
+    raise ValueError("MONGODB_URI not found in .env file")
+
+client = MongoClient(MONGODB_URI)
 db = client["joy_of_painting"]
 collection = db["episodes"]
 
@@ -15,8 +19,21 @@ collection = db["episodes"]
 clean_data_file = "data/clean_data.csv"
 data = pd.read_csv(clean_data_file)
 
-# Convert DataFrame to dictionary and insert into MongoDB
-data_dict = data.to_dict(orient="records")
-collection.insert_many(data_dict)
+# Adjust data format for MongoDB insertion
+def format_record(record):
+    record["colors"] = record["colors"].split(", ") if isinstance(record["colors"], str) else []
+    record["subjects"] = record["subjects"].split(", ") if isinstance(record["subjects"], str) else []
+    record["notes"] = record["notes"] if pd.notna(record["notes"]) else None  # Replace NaN with None
+    return record
 
-print(f"Inserted {len(data_dict)} records into MongoDB.")
+
+# Convert DataFrame to list of dictionaries
+data_records = data.to_dict(orient="records")
+formatted_records = [format_record(record) for record in data_records]
+
+# Insert into MongoDB
+result = collection.insert_many(formatted_records)
+print(f"Inserted {len(result.inserted_ids)} records into MongoDB.")
+
+# Close the connection
+client.close()
