@@ -7,11 +7,14 @@ router.get('/episodes', async (req, res) => {
     try {
         const { month } = req.query; 
         const query = month ? { months: month } : {};
+        console.log('Query:', query);
         const episodes = await Episode.find(query);
+        console.log('Episodes:', episodes);
         res.json(episodes);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
+
 
 module.exports = router;

@@ -13,6 +13,6 @@ const EpisodeSchema = new mongoose.Schema({
     air_dates: { type: String },
     months: { type: String },
     notes: { type: String },
-});
+}, { collection: 'episodes' });
 
 module.exports = mongoose.model('Episode', EpisodeSchema);
