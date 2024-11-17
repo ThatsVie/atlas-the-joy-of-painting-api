@@ -67,7 +67,7 @@ titles, seasons, episodes, colors, color_ids, air_dates, months, notes, image_li
 data = pd.DataFrame({
     'title': titles,
     'season': seasons,
-    'episode_number': episodes,  # Use snake_case
+    'episode_number': episodes,
     'colors': colors,
     'color_ids': ['; '.join(color) for color in color_ids],
     'image_links': image_links,

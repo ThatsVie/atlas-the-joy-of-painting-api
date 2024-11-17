@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const Episode = require('../models/Episode'); // Import your Episode model
+const Episode = require('../models/Episode');
 
 // GET /episodes - Fetch all episodes or filter by month
 router.get('/episodes', async (req, res) => {
     try {
-        const { month } = req.query; // Extract 'month' query parameter
-        const query = month ? { months: month } : {}; // Build query object
-        const episodes = await Episode.find(query); // Fetch episodes based on query
-        res.json(episodes); // Send JSON response
+        const { month } = req.query; 
+        const query = month ? { months: month } : {};
+        const episodes = await Episode.find(query);
+        res.json(episodes);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
