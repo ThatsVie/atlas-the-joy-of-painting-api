@@ -216,8 +216,9 @@ const fetchEpisodes = async () => {
                             <strong>Colors:</strong> {episode.colors.join(', ')}
                         </p>
                         <p>
-                            <strong>Subjects:</strong> {episode.subjects.join(', ')}
+                          <strong>Subjects:</strong> {episode.subjects.map(subject => subject.replace(/_/g, ' ')).join(', ')}
                         </p>
+
                     </div>
                 ))
             )}
