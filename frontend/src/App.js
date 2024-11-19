@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Select from 'react-select';
+import { format } from 'date-fns';
 import './App.css';
 
 
@@ -192,7 +193,7 @@ const fetchEpisodes = async () => {
                     <div key={index} className="episode-card">
                         <h2>{episode.title}</h2>
                         <p>(Season {episode.season}, Episode {episode.episode_number})</p>
-                        <p><strong>Air Date:</strong> {episode.air_date}</p>
+                        <p><strong>Air Date:</strong> {format(new Date(episode.air_date), 'MMMM dd, yyyy')}</p>
                         {episode.image_link && (
                             <img
                                 src={episode.image_link}

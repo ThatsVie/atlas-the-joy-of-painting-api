@@ -19,8 +19,8 @@ with open(episode_dates_file, 'r') as file:
         end_idx = line.find(')')
         if start_idx != -1 and end_idx != -1:
             date = line[start_idx + 1:end_idx]
-            formatted_date = pd.to_datetime(date, errors='coerce').strftime('%B %d, %Y')  # Format as "January 11, 1983"
-            air_dates.append(formatted_date)
+            iso_date = pd.to_datetime(date, errors='coerce').strftime('%Y-%m-%d')  # Convert to ISO format
+            air_dates.append(iso_date)
             title = line[:start_idx].strip().replace('"', '')  # Remove extra quotes
             titles.append(title)
             notes.append(line[end_idx + 1:].strip())
@@ -60,7 +60,7 @@ data = pd.DataFrame({
     'season': pd.to_numeric(seasons, errors='coerce'),
     'episode_number': pd.to_numeric(episodes, errors='coerce'),
     'air_date': air_dates,
-    'month': [pd.to_datetime(date, errors='coerce').strftime('%B') for date in air_dates],  # Extract month name
+    'month': [pd.to_datetime(date, errors='coerce').strftime('%B') if date else '' for date in air_dates],  # Extract month name
     'colors': colors,
     'subjects': subject_matter,
     'image_link': image_links,
