@@ -1,188 +1,228 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Select from 'react-select';
+import './App.css';
+
 
 const App = () => {
-  const [month, setMonth] = useState("");
-  const [subjects, setSubjects] = useState([]);
-  const [colors, setColors] = useState([]);
   const [episodes, setEpisodes] = useState([]);
-  const [noResults, setNoResults] = useState(false);
+  const [selectedMonths, setSelectedMonths] = useState([]);
+  const [selectedSubjects, setSelectedSubjects] = useState([]);
+  const [selectedColors, setSelectedColors] = useState([]);
 
-  // Full list of subjects and colors
-  const subjectOptions = [
-    "APPLE_FRAME", "AURORA_BOREALIS", "BARN", "BEACH", "BOAT", "BRIDGE", "BUILDING", "BUSHES", "CABIN", "CACTUS",
-    "CIRCLE_FRAME", "CIRRUS", "CLIFF", "CLOUDS", "CONIFER", "CUMULUS", "DECIDUOUS", "DIANE_ANDRE", "DOCK",
-    "DOUBLE_OVAL_FRAME", "FARM", "FENCE", "FIRE", "FLORIDA FRAME", "FLOWERS", "FOG", "FRAMED", "GRASS", "GUEST",
-    "HALF_CIRCLE_FRAME", "HALF_OVAL_FRAME", "HILLS", "LAKE", "LAKES", "LIGHTHOUSE", "MILL", "MOON", "MOUNTAIN",
-    "MOUNTAINS", "NIGHT", "OCEAN", "OVAL_FRAME", "PALM_TREES", "PATH", "PERSON", "PORTRAIT", "RECTANGLE_3D_FRAME",
-    "RECTANGULAR_FRAME", "RIVER", "ROCKS", "SEASHELL_FRAME", "SNOW", "SNOWY_MOUNTAIN", "SPLIT_FRAME", "STEVE_ROSS",
-    "STRUCTURE", "SUN", "TOMB_FRAME", "TREE", "TREES", "TRIPLE_FRAME", "WATERFALL", "WAVES", "WINDMILL",
-    "WINDOW_FRAME", "WINTER", "WOOD_FRAMED"
+  const monthsOptions = [
+    { value: 'January', label: 'January' },
+    { value: 'February', label: 'February' },
+    { value: 'March', label: 'March' },
+    { value: 'April', label: 'April' },
+    { value: 'May', label: 'May' },
+    { value: 'June', label: 'June' },
+    { value: 'July', label: 'July' },
+    { value: 'August', label: 'August' },
+    { value: 'September', label: 'September' },
+    { value: 'October', label: 'October' },
+    { value: 'November', label: 'November' },
+    { value: 'December', label: 'December' },    
   ];
 
-  const colorOptions = [
-    "Black Gesso", "Bright Red", "Burnt Umber", "Cadmium Yellow", "Dark Sienna", "Indian Red", "Indian Yellow",
-    "Liquid Black", "Liquid Clear", "Midnight Black", "Phthalo Blue", "Phthalo Green", "Prussian Blue", "Sap Green",
-    "Titanium White", "Van Dyke Brown", "Yellow Ochre", "Alizarin Crimson"
-  ];
+  const colorsOptions = [
+    { value: 'Alizarin Crimson', label: 'Alizarin Crimson' },
+    { value: 'Black Gesso', label: 'Black Gesso' },
+    { value: 'Bright Red', label: 'Bright Red' },
+    { value: 'Burnt Umber', label: 'Burnt Umber' },
+    { value: 'Cadmium Yellow', label: 'Cadmium Yellow' },
+    { value: 'Dark Sienna', label: 'Dark Sienna' },
+    { value: 'Indian Red', label: 'Indian Red' },
+    { value: 'Indian Yellow', label: 'Indian Yellow' },
+    { value: 'Liquid Black', label: 'Liquid Black' },
+    { value: 'Liquid Clear', label: 'Liquid Clear' },
+    { value: 'Midnight Black', label: 'Midnight Black' },
+    { value: 'Phthalo Blue', label: 'Phthalo Blue' },
+    { value: 'Phthalo Green', label: 'Phthalo Green' },
+    { value: 'Prussian Blue', label: 'Prussian Blue' },
+    { value: 'Sap Green', label: 'Sap Green' },
+    { value: 'Titanium White', label: 'Titanium White' },
+    { value: 'Van Dyke Brown', label: 'Van Dyke Brown' },
+    { value: 'Yellow Ochre', label: 'Yellow Ochre' },
+];
 
-  // Fetch episodes based on filters
-  const fetchEpisodes = async () => {
-    try {
-      const response = await axios.get("http://localhost:4000/episodes", {
-        params: {
-          month,
-          subjects: subjects.join(","),
-          colors: colors.join(","),
-        },
+
+const subjectsOptions = [
+  { value: 'APPLE_FRAME', label: 'Apple Frame' },
+  { value: 'AURORA_BOREALIS', label: 'Aurora Borealis' },
+  { value: 'BARN', label: 'Barn' },
+  { value: 'BEACH', label: 'Beach' },
+  { value: 'BOAT', label: 'Boat' },
+  { value: 'BRIDGE', label: 'Bridge' },
+  { value: 'BUILDING', label: 'Building' },
+  { value: 'BUSHES', label: 'Bushes' },
+  { value: 'CABIN', label: 'Cabin' },
+  { value: 'CACTUS', label: 'Cactus' },
+  { value: 'CIRCLE_FRAME', label: 'Circle Frame' },
+  { value: 'CIRRUS', label: 'Cirrus' },
+  { value: 'CLIFF', label: 'Cliff' },
+  { value: 'CLOUDS', label: 'Clouds' },
+  { value: 'CONIFER', label: 'Conifer' },
+  { value: 'CUMULUS', label: 'Cumulus' },
+  { value: 'DECIDUOUS', label: 'Deciduous' },
+  { value: 'DIANE_ANDRE', label: 'Diane Andre' },
+  { value: 'DOCK', label: 'Dock' },
+  { value: 'DOUBLE_OVAL_FRAME', label: 'Double Oval Frame' },
+  { value: 'FARM', label: 'Farm' },
+  { value: 'FENCE', label: 'Fence' },
+  { value: 'FIRE', label: 'Fire' },
+  { value: 'FLORIDA_FRAME', label: 'Florida Frame' },
+  { value: 'FLOWERS', label: 'Flowers' },
+  { value: 'FOG', label: 'Fog' },
+  { value: 'FRAMED', label: 'Framed' },
+  { value: 'GRASS', label: 'Grass' },
+  { value: 'GUEST', label: 'Guest' },
+  { value: 'HALF_CIRCLE_FRAME', label: 'Half Circle Frame' },
+  { value: 'HALF_OVAL_FRAME', label: 'Half Oval Frame' },
+  { value: 'HILLS', label: 'Hills' },
+  { value: 'LAKE', label: 'Lake' },
+  { value: 'LAKES', label: 'Lakes' },
+  { value: 'LIGHTHOUSE', label: 'Lighthouse' },
+  { value: 'MILL', label: 'Mill' },
+  { value: 'MOON', label: 'Moon' },
+  { value: 'MOUNTAIN', label: 'Mountain' },
+  { value: 'MOUNTAINS', label: 'Mountains' },
+  { value: 'NIGHT', label: 'Night' },
+  { value: 'OCEAN', label: 'Ocean' },
+  { value: 'OVAL_FRAME', label: 'Oval Frame' },
+  { value: 'PALM_TREES', label: 'Palm Trees' },
+  { value: 'PATH', label: 'Path' },
+  { value: 'PERSON', label: 'Person' },
+  { value: 'PORTRAIT', label: 'Portrait' },
+  { value: 'RECTANGLE_3D_FRAME', label: 'Rectangle 3D Frame' },
+  { value: 'RECTANGULAR_FRAME', label: 'Rectangular Frame' },
+  { value: 'RIVER', label: 'River' },
+  { value: 'ROCKS', label: 'Rocks' },
+  { value: 'SEASHELL_FRAME', label: 'Seashell Frame' },
+  { value: 'SNOW', label: 'Snow' },
+  { value: 'SNOWY_MOUNTAIN', label: 'Snowy Mountain' },
+  { value: 'SPLIT_FRAME', label: 'Split Frame' },
+  { value: 'STEVE_ROSS', label: 'Steve Ross' },
+  { value: 'STRUCTURE', label: 'Structure' },
+  { value: 'SUN', label: 'Sun' },
+  { value: 'TOMB_FRAME', label: 'Tomb Frame' },
+  { value: 'TREE', label: 'Tree' },
+  { value: 'TREES', label: 'Trees' },
+  { value: 'TRIPLE_FRAME', label: 'Triple Frame' },
+  { value: 'WATERFALL', label: 'Waterfall' },
+  { value: 'WAVES', label: 'Waves' },
+  { value: 'WINDMILL', label: 'Windmill' },
+  { value: 'WINDOW_FRAME', label: 'Window Frame' },
+  { value: 'WINTER', label: 'Winter' },
+  { value: 'WOOD_FRAMED', label: 'Wood Framed' }
+];
+
+
+const fetchEpisodes = async () => {
+  try {
+      const response = await axios.get('http://localhost:4000/episodes', {
+          params: {
+              months: selectedMonths.map(option => option.value).join(','),
+              colors: selectedColors.map(option => option.value).join(','),
+              subjects: selectedSubjects.map(option => option.value).join(','),
+          },
       });
-
       setEpisodes(response.data);
-      setNoResults(response.data.length === 0); // Check if there are no results
-    } catch (error) {
-      console.error("Error fetching episodes:", error);
-    }
-  };
+  } catch (error) {
+      console.error('Error fetching episodes:', error);
+  }
+};
 
-  // Handle form submission
   const handleSearch = (e) => {
     e.preventDefault();
     fetchEpisodes();
   };
 
-  // Clear all filters
-  const clearFilters = () => {
-    setMonth("");
-    setSubjects([]);
-    setColors([]);
+  const handleClearAll = () => {
+    setSelectedMonths([]);
+    setSelectedSubjects([]);
+    setSelectedColors([]);
     setEpisodes([]);
-    setNoResults(false);
   };
 
   return (
-    <div className="container my-4">
-      <h1 className="text-center mb-4">The Joy of Painting Episodes</h1>
-
-      {/* Filter Form */}
-      <form onSubmit={handleSearch} className="mb-4">
-        <div className="row g-3">
-          {/* Month Filter */}
-          <div className="col-md-4">
-            <label htmlFor="month" className="form-label">Month:</label>
-            <select
-              id="month"
-              className="form-select"
-              value={month}
-              onChange={(e) => setMonth(e.target.value)}
-            >
-              <option value="">All</option>
-              <option value="January">January</option>
-              <option value="February">February</option>
-              <option value="March">March</option>
-              <option value="April">April</option>
-              <option value="May">May</option>
-              <option value="June">June</option>
-              <option value="July">July</option>
-              <option value="August">August</option>
-              <option value="September">September</option>
-              <option value="October">October</option>
-              <option value="November">November</option>
-              <option value="December">December</option>
-            </select>
-          </div>
-
-          {/* Subjects Filter */}
-          <div className="col-md-4">
-            <label htmlFor="subjects" className="form-label">Subjects:</label>
-            <select
-              id="subjects"
-              className="form-select"
-              multiple
-              value={subjects}
-              onChange={(e) =>
-                setSubjects(Array.from(e.target.selectedOptions, (option) => option.value))
-              }
-            >
-              {subjectOptions.map((subject, index) => (
-                <option key={index} value={subject}>
-                  {subject}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Colors Filter */}
-          <div className="col-md-4">
-            <label htmlFor="colors" className="form-label">Colors:</label>
-            <select
-              id="colors"
-              className="form-select"
-              multiple
-              value={colors}
-              onChange={(e) =>
-                setColors(Array.from(e.target.selectedOptions, (option) => option.value))
-              }
-            >
-              {colorOptions.map((color, index) => (
-                <option key={index} value={color}>
-                  {color}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="mt-3 d-flex justify-content-between">
-          <button type="submit" className="btn btn-primary">Search</button>
-          <button type="button" className="btn btn-secondary" onClick={clearFilters}>
-            Clear All
-          </button>
-        </div>
-      </form>
-
-      {/* No Results Message */}
-      {noResults && (
-        <div className="alert alert-warning text-center">
-          No episodes found for the selected filters.
-        </div>
-      )}
-
-      {/* Episodes List */}
-      <div className="row">
-        {episodes.map((episode) => (
-          <div key={episode._id} className="col-md-4 mb-4">
-            <div className="card">
-              <img
-                src={episode.image_link}
-                className="card-img-top"
-                alt={episode.title}
-              />
-              <div className="card-body">
-                <h5 className="card-title">{episode.title}</h5>
-                <p className="card-text">
-                  <strong>Season:</strong> {episode.season}<br />
-                  <strong>Episode:</strong> {episode.episode_number}<br />
-                  <strong>Air Date:</strong> {episode.air_date}<br />
-                  <strong>Colors:</strong> {episode.colors.join(", ")}<br />
-                  <strong>Subjects:</strong> {episode.subjects.join(", ")}
-                </p>
-                <a
-                  href={episode.youtube_link}
-                  className="btn btn-outline-primary"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Watch Episode
-                </a>
-              </div>
+    <div className="App">
+        <h1>The Joy of Painting Episodes</h1>
+        <form onSubmit={handleSearch}>
+            <div>
+                <label>Months:</label>
+                <Select
+                    options={monthsOptions}
+                    isMulti
+                    value={selectedMonths}
+                    onChange={setSelectedMonths}
+                />
             </div>
-          </div>
-        ))}
-      </div>
+            <div>
+                <label>Subjects:</label>
+                <Select
+                    options={subjectsOptions}
+                    isMulti
+                    value={selectedSubjects}
+                    onChange={setSelectedSubjects}
+                />
+            </div>
+            <div>
+                <label>Colors:</label>
+                <Select
+                    options={colorsOptions}
+                    isMulti
+                    value={selectedColors}
+                    onChange={setSelectedColors}
+                />
+            </div>
+            <div className="form-buttons">
+                <button type="submit">Search</button>
+                <button type="button" onClick={handleClearAll} className="clear-button">
+                    Clear All
+                </button>
+            </div>
+        </form>
+        <div className="episodes-list">
+            {episodes.length === 0 ? (
+                <p>No episodes found matching the selected criteria.</p>
+            ) : (
+                episodes.map((episode, index) => (
+                    <div key={index} className="episode-card">
+                        <h2>{episode.title}</h2>
+                        <p>(Season {episode.season}, Episode {episode.episode_number})</p>
+                        <p><strong>Air Date:</strong> {episode.air_date}</p>
+                        {episode.image_link && (
+                            <img
+                                src={episode.image_link}
+                                alt={`Thumbnail for ${episode.title}`}
+                                className="episode-image"
+                            />
+                        )}
+                        {episode.youtube_link && (
+                            <p>
+                                <a
+                                    href={episode.youtube_link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Watch on YouTube
+                                </a>
+                            </p>
+                        )}
+                        <p>
+                            <strong>Colors:</strong> {episode.colors.join(', ')}
+                        </p>
+                        <p>
+                            <strong>Subjects:</strong> {episode.subjects.join(', ')}
+                        </p>
+                    </div>
+                ))
+            )}
+        </div>
     </div>
-  );
+);
 };
 
 export default App;

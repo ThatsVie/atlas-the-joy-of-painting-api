@@ -1,23 +1,33 @@
 const Episode = require('../models/Episode');
 
+// Fetch all episodes or filter by query
 const getAllEpisodes = async (req, res) => {
     try {
-        const { month, subjects, colors, operator = 'AND' } = req.query;
         const query = {};
 
-        if (month) {
-            query.month = month;
+        // Filter by months (OR logic)
+        if (req.query.months) {
+            const monthsArray = req.query.months.split(',');
+            query.month = { $in: monthsArray };
         }
 
-        if (subjects) {
-            query.subjects = { [operator === 'AND' ? '$all' : '$in']: subjects.split(',') };
+        // Filter by colors (AND logic)
+        if (req.query.colors) {
+            const colorsArray = req.query.colors.split(',');
+            query.colors = { $all: colorsArray };
         }
 
-        if (colors) {
-            query.colors = { [operator === 'AND' ? '$all' : '$in']: colors.split(',') };
+        // Filter by subjects (AND logic)
+        if (req.query.subjects) {
+            const subjectsArray = req.query.subjects.split(',');
+            query.subjects = { $all: subjectsArray };
         }
 
-        const episodes = await Episode.find(query);
+        // Fetch episodes sorted by air_date
+        const episodes = await Episode.find(query)
+            .select('title season episode_number air_date colors subjects image_link youtube_link')
+            .sort({ air_date: 1 }); // Sort by air_date in ascending order
+
         res.json(episodes);
     } catch (err) {
         res.status(500).json({ error: err.message });
