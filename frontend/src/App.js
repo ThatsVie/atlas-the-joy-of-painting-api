@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Select from 'react-select';
-import { format } from 'date-fns';
+import { toZonedTime, format } from 'date-fns-tz';
 import './App.css';
 
 
@@ -121,109 +121,127 @@ const subjectsOptions = [
 
 
 const fetchEpisodes = async () => {
+  const months = selectedMonths.map((option) => option.value).join(",");
+  const colors = selectedColors.map((option) => option.value).join(",");
+  const subjects = selectedSubjects.map((option) => option.value).join(",");
+
+  console.log("Fetch Parameters:", { months, colors, subjects });
+
   try {
-      const response = await axios.get('http://localhost:4000/episodes', {
-          params: {
-              months: selectedMonths.map(option => option.value).join(','),
-              colors: selectedColors.map(option => option.value).join(','),
-              subjects: selectedSubjects.map(option => option.value).join(','),
-          },
-      });
-      setEpisodes(response.data);
+    const response = await axios.get("http://localhost:4000/episodes", {
+      params: { months, colors, subjects },
+    });
+    setEpisodes(response.data);
   } catch (error) {
-      console.error('Error fetching episodes:', error);
+    console.error("Error fetching episodes:", error);
   }
 };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    fetchEpisodes();
-  };
+const handleSearch = (e) => {
+  e.preventDefault();
+  fetchEpisodes();
+};
 
-  const handleClearAll = () => {
-    setSelectedMonths([]);
-    setSelectedSubjects([]);
-    setSelectedColors([]);
-    setEpisodes([]);
-  };
+const handleClearAll = () => {
+  setSelectedMonths([]);
+  setSelectedSubjects([]);
+  setSelectedColors([]);
+  setEpisodes([]);
+};
 
-  return (
-    <div className="App">
-        <h1>The Joy of Painting Episodes</h1>
-        <form onSubmit={handleSearch}>
-            <div>
-                <label>Months:</label>
-                <Select
-                    options={monthsOptions}
-                    isMulti
-                    value={selectedMonths}
-                    onChange={setSelectedMonths}
-                />
-            </div>
-            <div>
-                <label>Subjects:</label>
-                <Select
-                    options={subjectsOptions}
-                    isMulti
-                    value={selectedSubjects}
-                    onChange={setSelectedSubjects}
-                />
-            </div>
-            <div>
-                <label>Colors:</label>
-                <Select
-                    options={colorsOptions}
-                    isMulti
-                    value={selectedColors}
-                    onChange={setSelectedColors}
-                />
-            </div>
-            <div className="form-buttons">
-                <button type="submit">Search</button>
-                <button type="button" onClick={handleClearAll} className="clear-button">
-                    Clear All
-                </button>
-            </div>
-        </form>
-        <div className="episodes-list">
-            {episodes.length === 0 ? (
-                <p>No episodes found matching the selected criteria.</p>
-            ) : (
-                episodes.map((episode, index) => (
-                    <div key={index} className="episode-card">
-                        <h2>{episode.title}</h2>
-                        <p>(Season {episode.season}, Episode {episode.episode_number})</p>
-                        <p><strong>Air Date:</strong> {format(new Date(episode.air_date), 'MMMM dd, yyyy')}</p>
-                        {episode.image_link && (
-                            <img
-                                src={episode.image_link}
-                                alt={`Thumbnail for ${episode.title}`}
-                                className="episode-image"
-                            />
-                        )}
-                        {episode.youtube_link && (
-                            <p>
-                                <a
-                                    href={episode.youtube_link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    Watch on YouTube
-                                </a>
-                            </p>
-                        )}
-                        <p>
-                            <strong>Colors:</strong> {episode.colors.join(', ')}
-                        </p>
-                        <p>
-                          <strong>Subjects:</strong> {episode.subjects.map(subject => subject.replace(/_/g, ' ')).join(', ')}
-                        </p>
+return (
+  <div className="App">
+    <h1>The Joy of Painting Episodes</h1>
+    <form onSubmit={handleSearch}>
+      <div>
+        <label>Months:</label>
+        <Select
+          options={monthsOptions}
+          isMulti
+          value={selectedMonths}
+          onChange={setSelectedMonths}
+        />
+      </div>
+      <div>
+        <label>Subjects:</label>
+        <Select
+          options={subjectsOptions}
+          isMulti
+          value={selectedSubjects}
+          onChange={setSelectedSubjects}
+        />
+      </div>
+      <div>
+        <label>Colors:</label>
+        <Select
+          options={colorsOptions}
+          isMulti
+          value={selectedColors}
+          onChange={setSelectedColors}
+        />
+      </div>
+      <div className="form-buttons">
+        <button type="submit">Search</button>
+        <button type="button" onClick={handleClearAll} className="clear-button">
+          Clear All
+        </button>
+      </div>
+    </form>
+    <div className="episodes-list">
+  {episodes.length === 0 ? (
+    <p>No episodes found matching the selected criteria.</p>
+  ) : (
+    episodes.map((episode, index) => (
+      <div key={index} className="episode-card">
+        <h2>{episode.title}</h2>
+        <p>(Season {episode.season}, Episode {episode.episode_number})</p>
+        <p>
+  <strong>Air Date:</strong>
+  {episode.air_date ? format(toZonedTime(new Date(episode.air_date), 'UTC'), 'MMMM dd, yyyy') : 'Unknown'}
+</p>
 
-                    </div>
-                ))
-            )}
-        </div>
-    </div>
+
+
+
+        {episode.image_link && (
+          <img
+            src={episode.image_link}
+            alt={`Thumbnail for ${episode.title}`}
+            className="episode-image"
+          />
+        )}
+        {episode.youtube_link && (
+          <p>
+            <a
+              href={episode.youtube_link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Watch on YouTube
+            </a>
+          </p>
+        )}
+        <p>
+          <strong>Colors:</strong> {episode.colors.join(', ')}
+        </p>
+        <p>
+          <strong>Subjects:</strong>{" "}
+          {episode.subjects
+            .map((subject) =>
+              subject
+                .replace(/_/g, " ")
+                .toLowerCase()
+                .replace(/\b\w/g, (char) => char.toUpperCase())
+            )
+            .join(", ")}
+        </p>
+      </div>
+    ))
+  )}
+</div>
+
+
+  </div>
 );
 };
 
