@@ -7,6 +7,7 @@ import './App.css';
 import Carousel from 'react-bootstrap/Carousel';
 
 
+
 const App = () => {
   const [showButton, setShowButton] = useState(false);
 
@@ -138,23 +139,29 @@ const subjectsOptions = [
   { value: 'WOOD_FRAMED', label: 'Wood Framed' }
 ];
 
+const [loading, setLoading] = useState(false);
 
 const fetchEpisodes = async () => {
+  setLoading(true); // Start loading state
   const months = selectedMonths.map((option) => option.value).join(",");
   const colors = selectedColors.map((option) => option.value).join(",");
   const subjects = selectedSubjects.map((option) => option.value).join(",");
 
-  console.log("Fetch Parameters:", { months, colors, subjects });
+  console.log("Fetch Parameters:", { months, colors, subjects }); // Log selected filter parameters
 
   try {
     const response = await axios.get("http://localhost:4000/episodes", {
       params: { months, colors, subjects },
+      timeout: 0, // Disable timeout for long server processing
     });
-    setEpisodes(response.data);
+    setEpisodes(response.data); // Set episodes data after successful fetch
   } catch (error) {
-    console.error("Error fetching episodes:", error);
+    console.error("Error fetching episodes:", error); // Log any errors
+  } finally {
+    setLoading(false); // Stop loading state
   }
 };
+
 
 const handleSearch = (e) => {
   e.preventDefault();
@@ -303,78 +310,78 @@ return (
 
 {/* Episodes List Section */}
 <div className="episodes-list">
-  {episodes.length === 0 && selectedMonths.length === 0 && selectedSubjects.length === 0 && selectedColors.length === 0 ? (
+  {loading ? (
+    <div className="loader-container">
+      <div className="loader"></div>
+      <p>Loading results...</p>
+    </div>
+  ) : episodes.length === 0 && selectedMonths.length === 0 && selectedSubjects.length === 0 && selectedColors.length === 0 ? (
     <p>Please use the filters above to search for episodes by month, subject, and/or color.</p>
   ) : episodes.length === 0 ? (
     <p>No episodes found matching the selected criteria.</p>
   ) : (
-    <>
-      {episodes.map((episode, index) => (
-        <div key={index} className="episode-card">
-          <h2>{episode.title}</h2>
-          <p>(Season {episode.season}, Episode {episode.episode_number})</p>
+    episodes.map((episode, index) => (
+      <div key={index} className="episode-card">
+        <h2>{episode.title}</h2>
+        <p>(Season {episode.season}, Episode {episode.episode_number})</p>
+        <p>
+          <strong>Air Date:</strong>{" "}
+          {episode.air_date ? format(toZonedTime(new Date(episode.air_date), 'UTC'), 'MMMM dd, yyyy') : 'Unknown'}
+        </p>
+        {episode.image_link && (
+          <img
+            src={episode.image_link}
+            alt={`Thumbnail for ${episode.title}`}
+            className="episode-image"
+          />
+        )}
+        {episode.youtube_link && (
           <p>
-            <strong>Air Date:</strong>{" "}
-            {episode.air_date
-              ? format(toZonedTime(new Date(episode.air_date), "UTC"), "MMMM dd, yyyy")
-              : "Unknown"}
+            <a
+              href={episode.youtube_link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Watch on YouTube
+            </a>
           </p>
-          {episode.image_link && (
-            <img
-              src={episode.image_link}
-              alt={`Thumbnail for ${episode.title}`}
-              className="episode-image"
-            />
-          )}
-          {episode.youtube_link && (
-            <p>
-              <a
-                href={episode.youtube_link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Watch on YouTube
-              </a>
-            </p>
-          )}
-          <p>
-            <strong>Colors:</strong> {episode.colors.join(", ")}
-          </p>
-          <p>
-            <strong>Subjects:</strong>{" "}
-            {episode.subjects
-              .map((subject) =>
-                subject
-                  .replace(/_/g, " ")
-                  .toLowerCase()
-                  .replace(/\b\w/g, (char) => char.toUpperCase())
-              )
-              .join(", ")}
-          </p>
-        </div>
-      ))}
-
-      {/* Back to Top Button */}
-      {showButton && (
-        <div className="back-to-top-container">
-          <button
-            className="back-to-top"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          >
-            Back to Top
-          </button>
-        </div>
-      )}
-    </>
+        )}
+        <p>
+          <strong>Colors:</strong> {episode.colors.join(", ")}
+        </p>
+        <p>
+          <strong>Subjects:</strong>{" "}
+          {episode.subjects
+            .map((subject) =>
+              subject
+                .replace(/_/g, " ")
+                .toLowerCase()
+                .replace(/\b\w/g, (char) => char.toUpperCase())
+            )
+            .join(", ")}
+        </p>
+      </div>
+    ))
   )}
 </div>
 
-{/* Footer Section */}
+{/* Back to Top Button */}
+{showButton && (
+  <div className="back-to-top-container">
+    <button
+      className="back-to-top"
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+    >
+      Back to Top
+    </button>
+  </div>
+)}
+
+
 <footer className="page-footer">
   <p>Thank you for stopping by this page!</p>
   <p>Feel free to explore more:</p>
   <ul>
-    
     <li>
       <a href="https://github.com/ThatsVie/atlas-the-joy-of-painting-api/blob/main/README.md" target="_blank" rel="noopener noreferrer">
         Project GitHub README
@@ -393,6 +400,7 @@ return (
   </ul>
   <p>“Isn’t it fantastic that you can change your mind and create all these happy things?” – Bob Ross</p>
 </footer>
+
   </div>
   
 );
