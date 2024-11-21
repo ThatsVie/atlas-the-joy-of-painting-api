@@ -17,5 +17,5 @@ db = client["joy_of_painting"]
 result = db["episodes"].delete_many({})
 print(f"Deleted {result.deleted_count} documents from the 'episodes' collection.")
 
-# Close the connection
+
 client.close()

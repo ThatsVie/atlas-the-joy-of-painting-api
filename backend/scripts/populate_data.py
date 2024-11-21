@@ -23,7 +23,7 @@ data = pd.read_csv(clean_data_file)
 def format_record(record):
     record["colors"] = record["colors"].split(", ") if isinstance(record["colors"], str) else []
     record["subjects"] = record["subjects"].split(", ") if isinstance(record["subjects"], str) else []
-    record["notes"] = record["notes"] if pd.notna(record["notes"]) else None  # Replace NaN with None
+    record["notes"] = record["notes"] if pd.notna(record["notes"]) else None
     return record
 
 
@@ -35,5 +35,4 @@ formatted_records = [format_record(record) for record in data_records]
 result = collection.insert_many(formatted_records)
 print(f"Inserted {len(result.inserted_ids)} records into MongoDB.")
 
-# Close the connection
 client.close()

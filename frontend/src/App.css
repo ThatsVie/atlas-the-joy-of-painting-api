@@ -1,101 +1,320 @@
 /* Body Styling */
 body {
-    margin: 0;
-    font-family: 'Open Sans', sans-serif;
-    background: linear-gradient(120deg, #ff9a9e, #fad0c4 40%, #fbc2eb);
-    color: #333;
-  }
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  background: linear-gradient(120deg, #003135, #024950, #0FA4AF, #AFDDE5);
+  color: #333;
+  box-sizing: border-box;
+  border: 20px solid #c44601; /* Outer border for framing */
+  border-radius: 40px; /* Rounded corners for the outermost container */
+  padding: 20px; /* Space for inner content */
+  box-shadow: 
+    0 0 10px 5px #0FA4AF, /* Outer glow effect */
+    inset 0 0 10px 5px #964734; /* Inner glow effect for depth */
+}
+
+/* Main Content Container */
+.App {
+  background-color: #fff; /* White background for the main content */
+  position: relative;
+  margin: 0 auto;
+  padding: 30px; /* Inner padding */
+  max-width: 1200px; /* Constrain content width */
+  border-radius: 30px; /* Rounded corners for the content container */
+  border: 10px solid #964734; /* Inner frame border */
   
-  /* Header Styling */
-  header {
-    text-align: center;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Mask for ornate decorative effect */
+  --mask: 
+    linear-gradient(#000 0 0) 50%/calc(100% - 30px) calc(100% - 30px) no-repeat,
+    radial-gradient(farthest-side, #000 90%, #0000) 0 0/60px 60px round;
+  -webkit-mask: var(--mask);
+          mask: var(--mask);
+
+  background: 
+    linear-gradient(#c44601, #c44601) padding-box /* Inner frame background */
+    linear-gradient(#964734, #0FA4AF) border-box; /* Decorative gradient border */
+  border: 6px solid transparent; /* Transparent to show the layered gradient */
+}
+
+
+/* Header Styling */
+.page-header {
+  text-align: center;
+  padding: 20px;
+  background-color: #c44601;
+  color: #AFDDE5;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}
+
+.page-header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  color: #AFDDE5;
+  margin-bottom: 15px;
+}
+
+.pug-image {
+  max-width: 100%;
+  height: auto;
+  margin: 20px auto;
+  display: block;
+  border-radius: 20px;
+  object-fit: contain;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Biography Section */
+.biography-section {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #024950;
+  color: #AFDDE5;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Carousel Styling */
+.carousel {
+  margin: 30px auto;
+  max-width: 90%; /* Responsive width */
+  background: linear-gradient(135deg, #FFD700, #FFB300); /* Gradient for a dynamic look */
+  color: #003135;
+  padding: 60px 20px;
+  text-align: center;
+  border-radius: 20px;
+  font-size: 1.5rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  position: relative;
+  min-height: 200px;
+}
+
+/* Carousel paragraph styling */
+.carousel p {
+  font-size: 1.4rem;
+  font-weight: bold;
+  line-height: 1.6;
+  margin: 0; /* Remove default margins */
+}
+
+/* Control buttons */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 5%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgba(0, 49, 53, 0.8); /* Dark teal for arrow background */
+  border-radius: 50%;
+  padding: 5px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .carousel {
+    padding: 40px 10px; /* Adjust padding for smaller screens */
+    min-height: 150px; /* Reduce height for smaller screens */
   }
-  
-  header img {
-    width: 100%;
-    max-height: 300px;
-    object-fit: cover;
-    border-radius: 0 0 20px 20px;
+
+  .carousel p {
+    font-size: 1rem; /* Smaller font for mobile */
   }
-  
-  header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    color: #333;
-    margin-top: 10px;
-  }
-  
-  /* Filters Styling */
+}
+
+
+/* Filters Styling */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.filters label {
+  font-weight: bold;
+  color: #024950;
+}
+
+.filters input,
+.filters select,
+.filters button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 20px;
+  background-color: #AFDDE5;
+  color: #024950;
+  transition: 0.3s;
+}
+
+.filters input:focus,
+.filters select:focus,
+.filters button:hover {
+  border-color: #0FA4AF;
+  background-color: #E0F7F9;
+}
+
+.filters .clear-button {
+  background-color: #c44601;
+  color: #FFFFFF;
+  border: none;
+  transition: 0.3s;
+}
+
+.filters .clear-button:hover {
+  background-color: #0FA4AF;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 15px; /* Add spacing between buttons */
+  justify-content: center;
+  margin-top: 10px; /* Add some space above the buttons */
+}
+
+
+/* Episodes List Styling */
+.episodes-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.episode-card {
+  background-color: #c44601;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  width: 250px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: #AFDDE5;
+}
+
+.episode-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.episode-card img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.episode-card h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  color: #AFDDE5;
+  margin: 10px 0;
+}
+
+.episode-card p {
+  color: #E0F7F9;
+  font-size: 1rem;
+}
+
+.episode-card a {
+  color: #0FA4AF;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.episode-card a:hover {
+  color: #AFDDE5;
+}
+
+
+@media (max-width: 768px) {
   .filters {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 20px 0;
+      flex-direction: column;
+      align-items: center;
   }
-  
-  .filters input,
-  .filters select,
-  .filters button {
-    padding: 10px 15px;
-    font-size: 1rem;
-    border: 2px solid #ddd;
-    border-radius: 20px;
-    background-color: #f9f9f9;
-    transition: 0.3s;
-  }
-  
-  .filters input:focus,
-  .filters select:focus,
-  .filters button:hover {
-    border-color: #ff9a9e;
-    background-color: #fff;
-  }
-  
-  /* Episodes List Styling */
-  .episodes-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-  }
-  
+
   .episode-card {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    width: 250px;
-    text-align: center;
+      width: 90%;
   }
-  
-  .episode-card img {
-    max-width: 100%;
-    border-radius: 10px;
-  }
-  
-  .episode-card h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem;
-    color: #333;
-    margin: 10px 0;
-  }
-  
-  .episode-card p {
-    color: #555;
-    font-size: 1rem;
-  }
-  
-  /* Footer Styling */
-  footer {
-    text-align: center;
-    padding: 15px;
-    background-color: #fff;
-    color: #333;
-    font-size: 0.9rem;
-    margin-top: 20px;
-    border-radius: 20px 20px 0 0;
-  }
-  
+}
+
+/* Footer */
+.page-footer {
+  text-align: center;
+  padding: 40px 20px; /* More padding for a spacious look */
+  background: linear-gradient(135deg, #024950, #036564); /* Add a gradient for depth */
+  color: #AFDDE5;
+  font-size: 1rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+  position: relative;
+  overflow: hidden; /* For decorative details */
+}
+
+.page-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.page-footer ul li {
+  margin: 5px 0;
+  font-size: 1.1rem;
+}
+
+.page-footer a {
+  color: #FFD700;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.page-footer a:hover {
+  color: #FFF8DC;
+  transform: scale(1.1);
+}
+
+.page-footer p {
+  margin: 10px 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+
+
+.back-to-top {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background-color: #AFDDE5;
+  color: #024950;
+  cursor: pointer;
+  text-align: center;
+  width: auto;
+  margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-top:hover {
+  border-color: #0FA4AF;
+  background-color: #E0F7F9;
+}
+
+.back-to-top-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Space above the footer */
+  width: 100%; 
+  clear: both; 
+}
