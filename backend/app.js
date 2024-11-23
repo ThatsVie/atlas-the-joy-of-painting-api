@@ -20,14 +20,13 @@ mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('MongoDB connection error:', err));
 
-
 // Routes
 app.get('/', (req, res) => {
     res.send('Welcome to the Joy of Painting API');
 });
 
 const episodesRouter = require('./routes/episodes');
-app.use('/', episodesRouter);
+app.use('/episodes', episodesRouter);
 
 // Start Server
 app.listen(PORT, () => {

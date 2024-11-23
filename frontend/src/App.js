@@ -6,32 +6,32 @@ import { toZonedTime, format } from 'date-fns-tz';
 import './App.css';
 import Carousel from 'react-bootstrap/Carousel';
 
-
-
 const App = () => {
   const [showButton, setShowButton] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 300) {
-        // Show button after scrolling 300px
-        setShowButton(true);
-      } else {
-        setShowButton(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    // Cleanup event listener on component unmount
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   const [episodes, setEpisodes] = useState([]);
   const [selectedMonths, setSelectedMonths] = useState([]);
   const [selectedSubjects, setSelectedSubjects] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]);
+  const [selectedYears, setSelectedYears] = useState([]);
+  const [selectedSeason, setSelectedSeason] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
 
+  const yearOptions = [
+    { value: '1983', label: '1983' },
+    { value: '1984', label: '1984' },
+    { value: '1985', label: '1985' },
+    { value: '1986', label: '1986' },
+    { value: '1987', label: '1987' },
+    { value: '1988', label: '1988' },
+    { value: '1989', label: '1989' },
+    { value: '1990', label: '1990' },
+    { value: '1991', label: '1991' },
+    { value: '1992', label: '1992' },
+    { value: '1993', label: '1993' },
+    { value: '1994', label: '1994' },
+  ];
+  
   const monthsOptions = [
     { value: 'January', label: 'January' },
     { value: 'February', label: 'February' },
@@ -67,7 +67,6 @@ const App = () => {
     { value: 'Van Dyke Brown', label: 'Van Dyke Brown' },
     { value: 'Yellow Ochre', label: 'Yellow Ochre' },
 ];
-
 
 const subjectsOptions = [
   { value: 'APPLE_FRAME', label: 'Apple Frame' },
@@ -139,41 +138,114 @@ const subjectsOptions = [
   { value: 'WOOD_FRAMED', label: 'Wood Framed' }
 ];
 
-const [loading, setLoading] = useState(false);
+const seasonOptions = [
+  { value: 1, label: 'Season 1' },
+  { value: 2, label: 'Season 2' },
+  { value: 3, label: 'Season 3' },
+  { value: 4, label: 'Season 4' },
+  { value: 5, label: 'Season 5' },
+  { value: 6, label: 'Season 6' },
+  { value: 7, label: 'Season 7' },
+  { value: 8, label: 'Season 8' },
+  { value: 9, label: 'Season 9' },
+  { value: 10, label: 'Season 10' },
+  { value: 11, label: 'Season 11' },
+  { value: 12, label: 'Season 12' },
+  { value: 13, label: 'Season 13' },
+  { value: 14, label: 'Season 14' },
+  { value: 15, label: 'Season 15' },
+  { value: 16, label: 'Season 16' },
+  { value: 17, label: 'Season 17' },
+  { value: 18, label: 'Season 18' },
+  { value: 19, label: 'Season 19' },
+  { value: 20, label: 'Season 20' },
+  { value: 21, label: 'Season 21' },
+  { value: 22, label: 'Season 22' },
+  { value: 23, label: 'Season 23' },
+  { value: 24, label: 'Season 24' },
+  { value: 25, label: 'Season 25' },
+  { value: 26, label: 'Season 26' },
+  { value: 27, label: 'Season 27' },
+  { value: 28, label: 'Season 28' },
+  { value: 29, label: 'Season 29' },
+  { value: 30, label: 'Season 30' },
+  { value: 31, label: 'Season 31' },
+];
 
+// Fetch episodes based on filters
 const fetchEpisodes = async () => {
-  setLoading(true); // Start loading state
-  const months = selectedMonths.map((option) => option.value).join(",");
-  const colors = selectedColors.map((option) => option.value).join(",");
-  const subjects = selectedSubjects.map((option) => option.value).join(",");
-
-  console.log("Fetch Parameters:", { months, colors, subjects }); // Log selected filter parameters
-
+  setLoading(true);
   try {
+    const params = {
+      years: selectedYears.map((opt) => opt.value).join(","),
+      months: selectedMonths.map((opt) => opt.value).join(","),
+      subjects: selectedSubjects.map((opt) => opt.value).join(","),
+      colors: selectedColors.map((opt) => opt.value).join(","),
+      season: selectedSeason?.value || null,
+    };
+
     const response = await axios.get("http://localhost:4000/episodes", {
-      params: { months, colors, subjects },
-      timeout: 0, // Disable timeout for long server processing
+      params,
     });
-    setEpisodes(response.data); // Set episodes data after successful fetch
+
+    setEpisodes(response.data);
   } catch (error) {
-    console.error("Error fetching episodes:", error); // Log any errors
+    console.error("Error fetching episodes:", error);
   } finally {
-    setLoading(false); // Stop loading state
+    setLoading(false);
   }
 };
 
-
+// Function to handle search
 const handleSearch = (e) => {
   e.preventDefault();
+  setHasSearched(true); // Set to true once search is initiated
   fetchEpisodes();
 };
 
+// Search by Season Only
+const handleSearchBySeason = async (e) => {
+  e.preventDefault(); // Prevent page reload
+  setHasSearched(true);
+  setLoading(true);
+
+  if (!selectedSeason) {
+    alert("Please select a season to search."); // Handle cases where no season is selected
+    setLoading(false);
+    return;
+  }
+
+  try {
+    const response = await axios.get("http://localhost:4000/episodes", {
+      params: { season: selectedSeason.value }, // Pass season filter to API
+    });
+
+    setEpisodes(response.data); // Update episodes with results
+  } catch (error) {
+    console.error("Error fetching episodes by season:", error);
+    setEpisodes([]); // Ensure no stale data is shown
+  } finally {
+    setLoading(false); // Hide the loading spinner
+  }
+};
+
+// Function to handle clearing all filters
 const handleClearAll = () => {
   setSelectedMonths([]);
   setSelectedSubjects([]);
   setSelectedColors([]);
+  setSelectedYears([]);
+  setSelectedSeason(null);
   setEpisodes([]);
+  setHasSearched(false); // Reset to default message
 };
+
+useEffect(() => {
+  const handleScroll = () => setShowButton(window.scrollY > 300);
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
 
 return (
   <div className="App">
@@ -199,7 +271,7 @@ return (
       </div>
     </header>
 
-   {/* Carousel Section */}
+    {/* Carousel Section */}
    <Carousel interval={7000}>
   <Carousel.Item>
     <p>“We don’t make mistakes. We just have happy accidents.” - Bob Ross</p>
@@ -260,69 +332,106 @@ return (
   </Carousel.Item>
 </Carousel>
 
-
     {/* Filters Section */}
-    <form onSubmit={handleSearch}>
-    <div className="filters">
-      <div>
-      <label htmlFor="month-filter">Months:</label>
-  <Select
-    id="month-filter"
-    options={monthsOptions}
-    isMulti
-    value={selectedMonths}
-    onChange={setSelectedMonths}
-    aria-label="Filter by months"
-        />
-      </div>
-      
-      <div>
-      <label htmlFor="subject-filter">Subjects:</label>
-  <Select
-    id="subject-filter"
-    options={subjectsOptions}
-    isMulti
-    value={selectedSubjects}
-    onChange={setSelectedSubjects}
-    aria-label="Filter by subjects"
-        />
-      </div>
+    <form className="filter-form" onSubmit={handleSearch}>
+      <h2>Browse The Joy of Painting Episodes</h2>
+      <p className="filter-instructions">
+        Use the filters below to search for episodes by year, month, subject, and color. Alternatively, use the seasons filter to find episodes by season only.
+      </p>
+        <div className="filters">
+          <div>
+            <label htmlFor="year-filter">Year:</label>
+            <Select
+              id="year-filter"
+              options={yearOptions}
+              isMulti
+              value={selectedYears}
+              onChange={setSelectedYears}
+              aria-label="Filter by years"
+            />
+          </div>
+          <div>
+            <label htmlFor="month-filter">Month:</label>
+            <Select
+              id="month-filter"
+              options={monthsOptions}
+              isMulti
+              value={selectedMonths}
+              onChange={setSelectedMonths}
+              aria-label="Filter by months"
+            />
+          </div>
+          <div>
+            <label htmlFor="subject-filter">Subjects:</label>
+            <Select
+              id="subject-filter"
+              options={subjectsOptions}
+              isMulti
+              value={selectedSubjects}
+              onChange={setSelectedSubjects}
+              aria-label="Filter by subjects"
+            />
+          </div>
+          <div>
+            <label htmlFor="color-filter">Colors:</label>
+            <Select
+              id="color-filter"
+              options={colorsOptions}
+              isMulti
+              value={selectedColors}
+              onChange={setSelectedColors}
+              aria-label="Filter by colors"
+            />
+          </div>
+          <div className="form-buttons">
+            <button type="submit" className="search-button">Search</button>
+            <button
+              type="button"
+              onClick={handleClearAll}
+              className="clear-button"
+            >
+              Clear All
+            </button>
+          </div>
+        </div>
 
-      <div>
-      <label htmlFor="color-filter">Colors:</label>
-  <Select
-    id="color-filter"
-    options={colorsOptions}
-    isMulti
-    value={selectedColors}
-    onChange={setSelectedColors}
-    aria-label="Filter by colors"
-        />
-      </div>
-      <div className="form-buttons">
-        <button type="submit">Search</button>
-        <button type="button" onClick={handleClearAll} className="clear-button">
-          Clear All
-        </button>
-      </div>
-      </div>
-    </form>
+      </form>
 
-{/* Episodes List Section */}
-<div className="episodes-list">
-  {loading ? (
-    <div className="loader-container">
-      <div className="loader"></div>
-      <p>Loading results...</p>
+    {/* Season Filter */}
+    <div className="separator-line"></div>
+    <div className="separator">
+      <form onSubmit={handleSearchBySeason}>
+        <label htmlFor="season-filter">Search by Season Only:</label>
+        <div className="select-container">
+        <Select
+          id="season-filter"
+          options={seasonOptions}
+          value={selectedSeason}
+          onChange={setSelectedSeason}
+          aria-label="Filter by seasons"
+        />
+        </div>
+        <button type="submit" className="search-button">Search</button>
+      </form>
     </div>
-  ) : episodes.length === 0 && selectedMonths.length === 0 && selectedSubjects.length === 0 && selectedColors.length === 0 ? (
-    <p>Please use the filters above to search for episodes by month, subject, and/or color.</p>
-  ) : episodes.length === 0 ? (
-    <p>No episodes found matching the selected criteria.</p>
-  ) : (
-    episodes.map((episode, index) => (
-      <div key={index} className="episode-card">
-        <h2>{episode.title}</h2>
+
+    {/* Episodes List */}
+    <div className="episodes-list">
+      {loading ? (
+        <div className="loader-container">
+          <div className="loader"></div>
+          <p>Loading results...</p>
+        </div>
+      ) : hasSearched && episodes.length === 0 ? (
+        <p>No episodes found. Try adjusting the filters.</p>
+      ) : !hasSearched ? (
+        <p>
+          Use the season filter to find episodes by season.
+        </p>
+      ) : (
+        episodes.map((episode, index) => (
+          <div key={index} className="episode-card">
+            <h2>{episode.title}</h2>
         <p>(Season {episode.season}, Episode {episode.episode_number})</p>
         <p>
           <strong>Air Date:</strong>{" "}
@@ -336,16 +445,16 @@ return (
           />
         )}
         {episode.youtube_link && (
-          <p>
-            <a
-              href={episode.youtube_link}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Watch on YouTube
-            </a>
-          </p>
-        )}
+  <a
+    href={episode.youtube_link}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="youtube-button"
+  >
+    Watch on YouTube
+  </a>
+)}
+
         <p>
           <strong>Colors:</strong> {episode.colors.join(", ")}
         </p>
@@ -377,8 +486,7 @@ return (
   </div>
 )}
 
-
-<footer className="page-footer">
+    <footer className="page-footer">
   <p>Thank you for stopping by this page!</p>
   <p>Feel free to explore more:</p>
   <ul>
@@ -402,9 +510,7 @@ return (
 </footer>
 
   </div>
-  
 );
-
 };
 
 export default App;

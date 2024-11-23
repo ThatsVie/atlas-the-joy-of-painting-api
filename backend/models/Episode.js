@@ -5,13 +5,13 @@ const EpisodeSchema = new mongoose.Schema({
     season: { type: Number, required: true },
     episode_number: { type: Number, required: true },
     air_date: { type: Date, required: true },
+    year: { type: Number, required: true },
     month: { type: String, required: true },
     colors: [{ type: String }],
     subjects: [{ type: String }],
     image_link: { type: String, required: true },
     youtube_link: { type: String, required: true },
-    notes: { type: String, default: null }
+    notes: { type: String, default: null },
 }, { collection: 'episodes' });
-
 
 module.exports = mongoose.model('Episode', EpisodeSchema);

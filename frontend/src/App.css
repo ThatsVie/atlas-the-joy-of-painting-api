@@ -37,7 +37,6 @@ body {
   border: 6px solid transparent; /* Transparent to show the layered gradient */
 }
 
-
 /* Header Styling */
 .page-header {
   text-align: center;
@@ -81,8 +80,8 @@ body {
 /* Carousel Styling */
 .carousel {
   margin: 30px auto;
-  max-width: 90%; /* Responsive width */
-  background: linear-gradient(135deg, #FFD700, #FFB300); /* Gradient for a dynamic look */
+  max-width: 90%;
+  background: linear-gradient(135deg, #FFD700, #FFB300);
   color: #003135;
   padding: 60px 20px;
   text-align: center;
@@ -109,7 +108,7 @@ body {
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  background-color: rgba(0, 49, 53, 0.8); /* Dark teal for arrow background */
+  background-color: rgba(0, 49, 53, 0.8);
   border-radius: 50%;
   padding: 5px;
 }
@@ -175,9 +174,8 @@ body {
   display: flex;
   gap: 15px; /* Add spacing between buttons */
   justify-content: center;
-  margin-top: 10px; /* Add some space above the buttons */
+  margin-top: 10px;
 }
-
 
 /* Episodes List Styling */
 .episodes-list {
@@ -245,11 +243,78 @@ body {
   }
 }
 
+/* Season Filter Styling */
+.separator {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.separator form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.separator label {
+  font-weight: bold;
+  color: #024950;
+  font-size: 1.1rem;
+}
+
+.separator .search-button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 20px;
+  background-color: #AFDDE5;
+  color: #024950;
+  transition: 0.3s;
+}
+
+.separator .search-button:hover {
+  border-color: #0FA4AF;
+  background-color: #E0F7F9;
+}
+
+.separator .select-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.separator-line {
+  border: 0;
+  height: 5px;
+  background: linear-gradient(to right, #AFDDE5, #c44601, #AFDDE5);
+  margin: 5% auto;
+  width: 80%;
+}
+
+/* Watch on YouTube Button */
+.episode-card .youtube-button {
+  display: inline-block;
+  background-color: #FFD700;
+  color: #000000; /* Black text for contrast */
+  text-decoration: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.episode-card .youtube-button:hover {
+  background-color: #0FA4AF;
+  color: #E0F7F9;
+}
+
 /* Footer */
 .page-footer {
   text-align: center;
-  padding: 40px 20px; /* More padding for a spacious look */
-  background: linear-gradient(135deg, #024950, #036564); /* Add a gradient for depth */
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #024950, #036564);
   color: #AFDDE5;
   font-size: 1rem;
   border-radius: 20px;
@@ -291,14 +356,12 @@ body {
   font-weight: bold;
 }
 
-
-
 .back-to-top {
   padding: 8px 16px;
   font-size: 0.9rem;
   border: 2px solid #ddd;
   border-radius: 10px;
-  background-color: #AFDDE5;
+  background-color: #FFD700;
   color: #024950;
   cursor: pointer;
   text-align: center;
@@ -327,7 +390,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 200px; /* Adjust as needed */
+  height: 200px;
   text-align: center;
 }
 
@@ -344,7 +407,7 @@ body {
 .loader-container p {
   margin-top: 10px;
   font-size: 1.2rem;
-  color: #003135; /* Adjust to match your theme */
+  color: #003135;
 }
 
 @keyframes spin {

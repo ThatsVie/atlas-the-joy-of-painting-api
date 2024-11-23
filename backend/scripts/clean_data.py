@@ -61,6 +61,7 @@ data = pd.DataFrame({
     'episode_number': pd.to_numeric(episodes, errors='coerce'),
     'air_date': air_dates,
     'month': [pd.to_datetime(date, errors='coerce').strftime('%B') if date else '' for date in air_dates],  # Extract month name
+    'year': [pd.to_datetime(date, errors='coerce').year if date else '' for date in air_dates],  # Extract year
     'colors': colors,
     'subjects': subject_matter,
     'image_link': image_links,
@@ -72,6 +73,6 @@ data = pd.DataFrame({
 data.drop_duplicates(subset=['title', 'season', 'episode_number'], inplace=True)
 
 # Save the cleaned data to clean_data.csv
-data = data[['title', 'season', 'episode_number', 'air_date', 'month', 'colors', 'subjects', 'image_link', 'youtube_link', 'notes']]  # Reorder columns
+data = data[['title', 'season', 'episode_number', 'air_date', 'month', 'year', 'colors', 'subjects', 'image_link', 'youtube_link', 'notes']]  # Reorder columns
 data.to_csv(clean_data_file, index=False)
 print(f"Cleaned data saved to {clean_data_file} with {len(data)} records.")
