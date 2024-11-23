@@ -330,14 +330,17 @@ return (
   <Carousel.Item>
     <p>“Anytime you learn, you gain.” - Bob Ross</p>
   </Carousel.Item>
+
 </Carousel>
 
     {/* Filters Section */}
     <form className="filter-form" onSubmit={handleSearch}>
+    <div className="text-center">
       <h2>Browse The Joy of Painting Episodes</h2>
-      <p className="filter-instructions">
+      <p className="filter-instructions"> <b>
         Use the filters below to search for episodes by year, month, subject, and color. Alternatively, use the seasons filter to find episodes by season only.
-      </p>
+      </b></p>
+      </div>
         <div className="filters">
           <div>
             <label htmlFor="year-filter">Year:</label>
@@ -425,9 +428,9 @@ return (
       ) : hasSearched && episodes.length === 0 ? (
         <p>No episodes found. Try adjusting the filters.</p>
       ) : !hasSearched ? (
-        <p>
+        <p><b>
           Use the season filter to find episodes by season.
-        </p>
+        </b></p>
       ) : (
         episodes.map((episode, index) => (
           <div key={index} className="episode-card">
@@ -495,14 +498,10 @@ return (
         Project GitHub README
       </a>
     </li>
-    <li>
-      <a href="https://github.com/ThatsVie" target="_blank" rel="noopener noreferrer">
-        My GitHub Profile
-      </a>
-    </li>
+    
     <li>
       <a href="https://whatdoyouknowaboutlove.com/" target="_blank" rel="noopener noreferrer">
-        My Passion Project: What Do You Know About Love?
+        What Do You Know About Love?
       </a>
     </li>
   </ul>
