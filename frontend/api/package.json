@@ -10,15 +10,13 @@
     "express": "^4.21.1",
     "mongodb": "^6.10.0",
     "mongoose": "^8.8.1",
-    "morgan": "^1.10.0"
-  },
-  "devDependencies": {
+    "morgan": "^1.10.0",
     "nodemon": "^3.1.7"
   },
+  "devDependencies": {},
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "build": "echo 'No build step required for backend'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,14 +24,10 @@
     "url": "https://github.com/ThatsVie/atlas-the-joy-of-painting-api.git"
   },
   "keywords": [],
-  "author": "Vie Paula",
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ThatsVie/atlas-the-joy-of-painting-api/issues"
   },
-  "homepage": "https://github.com/ThatsVie/atlas-the-joy-of-painting-api#readme",
-  "engines": {
-    "node": ">=14.0.0"
-  }
+  "homepage": "https://github.com/ThatsVie/atlas-the-joy-of-painting-api#readme"
 }
-
