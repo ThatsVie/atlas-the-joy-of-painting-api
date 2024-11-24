@@ -265,8 +265,7 @@ return (
         </p>
         <p>
           This project celebrates Bob Ross and his art by cataloging his
-          episodes and providing tools to explore them by themes, colors, and
-          more.
+          episodes and providing tools to explore them by year, month, subject, colors, and season.
         </p>
       </div>
     </header>
@@ -338,7 +337,7 @@ return (
     <div className="text-center">
       <h2>Browse The Joy of Painting Episodes</h2>
       <p className="filter-instructions"> <b>
-        Use the filters below to search for episodes by year, month, subject, and color. Alternatively, use the seasons filter to find episodes by season only.
+        Use the filters below to search for episodes by year, month, subject, and/or color. Alternatively, use the seasons filter to find episodes by season only.
       </b></p>
       </div>
         <div className="filters">
@@ -500,8 +499,8 @@ return (
     </li>
     
     <li>
-      <a href="https://whatdoyouknowaboutlove.com/" target="_blank" rel="noopener noreferrer">
-        What Do You Know About Love?
+      <a href="https://whatdoyouknowaboutlove.com/viepaula/" target="_blank" rel="noopener noreferrer">
+        About the Developer
       </a>
     </li>
   </ul>

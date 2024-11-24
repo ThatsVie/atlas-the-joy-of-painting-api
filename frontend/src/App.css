@@ -4,7 +4,7 @@ body {
   padding: 0;
   font-family: 'Open Sans', sans-serif;
   background: linear-gradient(120deg, #003135, #024950, #0FA4AF, #AFDDE5);
-  color: #333;
+  color: #333333;
   box-sizing: border-box;
   border: 20px solid #c44601; /* Outer border for framing */
   border-radius: 40px; /* Rounded corners for the outermost container */
@@ -16,7 +16,7 @@ body {
 
 /* Main Content Container */
 .App {
-  background-color: #fff;
+  background-color: #FFFFFF;
   position: relative;
   margin: 0 auto;
   padding: 30px; /* Inner padding */
@@ -39,12 +39,43 @@ body {
 
 /* Header Styling */
 .page-header {
+  position: relative; /* Ensure the pseudo-elements are positioned relative to the header */
   text-align: center;
   padding: 20px;
-  background-color: #c44601;
+  background: linear-gradient(135deg, #c44601, #d85a0a); /* Add a gradient for consistency */
   color: #AFDDE5;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Subtle shadow decoration */
   border-radius: 20px;
+  overflow: hidden; /* Hide overflow for decorative elements */
+}
+
+/* Decorative circles for the header */
+.page-header::before,
+.page-header::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  z-index: 0;
+}
+
+.page-header::before {
+  width: 300px;
+  height: 300px;
+  top: -100px;
+  left: -100px;
+}
+
+.page-header::after {
+  width: 200px;
+  height: 200px;
+  bottom: -50px;
+  right: -50px;
+}
+
+.page-header h1, .page-header p {
+  position: relative;
+  z-index: 1;
 }
 
 .page-header h1 {
