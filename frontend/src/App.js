@@ -184,9 +184,7 @@ const fetchEpisodes = async () => {
       season: selectedSeason?.value || null,
     };
 
-    const response = await axios.get("http://localhost:4000/episodes", {
-      params,
-    });
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/episodes`, { params });
 
     setEpisodes(response.data);
   } catch (error) {
@@ -216,9 +214,10 @@ const handleSearchBySeason = async (e) => {
   }
 
   try {
-    const response = await axios.get("http://localhost:4000/episodes", {
-      params: { season: selectedSeason.value }, // Pass season filter to API
-    });
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/episodes`, {
+      params: { season: selectedSeason.value },
+  });
+  
 
     setEpisodes(response.data); // Update episodes with results
   } catch (error) {
@@ -335,7 +334,7 @@ return (
     {/* Filters Section */}
     <form className="filter-form" onSubmit={handleSearch}>
     <div className="text-center">
-      <h2>Browse The Joy of Painting Episodes</h2>
+    <h2 class="filters-title">Browse The Joy of Painting Episodes</h2>
       <p className="filter-instructions"> <b>
         Use the filters below to search for episodes by year, month, subject, and/or color. Alternatively, use the seasons filter to find episodes by season only.
       </b></p>
@@ -413,9 +412,29 @@ return (
           aria-label="Filter by seasons"
         />
         </div>
-        <button type="submit" className="search-button">Search</button>
+
+        <div className="form-buttons">
+      <button type="submit" className="search-button">Search</button>
+      <button
+        type="button"
+        className="clear-button"
+        onClick={() => {
+          setSelectedSeason(null); // Clear the selected season
+          setEpisodes([]); // Clear the episodes
+        }}
+      >
+        Clear All
+      </button>
+    </div>
+
       </form>
     </div>
+
+    {/* Episodes Section */}
+<div className="episodes-section">
+  {hasSearched && episodes.length > 0 && (
+    <h2 className="results-heading">Results</h2>
+  )}
 
     {/* Episodes List */}
     <div className="episodes-list">
@@ -474,6 +493,7 @@ return (
       </div>
     ))
   )}
+</div>
 </div>
 
 {/* Back to Top Button */}
