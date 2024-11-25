@@ -5,6 +5,9 @@ const getAllEpisodes = async (req, res) => {
     try {
         const query = {};
 
+        // Log the incoming request
+        console.log('Received Request with Query Parameters:', req.query);
+
         // Filter by years
         if (req.query.years) {
             const yearsArray = req.query.years.split(',').map(Number); // Parse years as numbers
@@ -34,16 +37,23 @@ const getAllEpisodes = async (req, res) => {
             query.season = parseInt(req.query.season, 10);
         }
 
-        console.log('Final Query:', JSON.stringify(query, null, 2)); // Log the constructed query
+        console.log('Constructed MongoDB Query:', JSON.stringify(query, null, 2)); // Log the query being executed
+        console.time('Query Execution Time');
 
+        // Execute the query
         const episodes = await Episode.find(query)
             .select('title season episode_number air_date year month colors subjects image_link youtube_link')
             .sort({ season: 1, episode_number: 1 });
 
-        res.json(episodes);
+        console.timeEnd('Query Execution Time');
+        console.log('Number of Episodes Found:', episodes.length);
+
+        // Respond with the data
+        res.status(200).json(episodes);
+
     } catch (err) {
         console.error('Error in getAllEpisodes:', err);
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ error: 'An error occurred while fetching episodes. Please try again later.' });
     }
 };
 
