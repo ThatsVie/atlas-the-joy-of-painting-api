@@ -481,11 +481,8 @@ const App = () => {
             </button>
             <button
               type="button"
+              onClick={handleClearAll}
               className="clear-button"
-              onClick={() => {
-                setSelectedSeason(null); // Clear the selected season
-                setEpisodes([]); // Clear the episodes
-              }}
             >
               Clear All
             </button>
