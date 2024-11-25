@@ -508,7 +508,7 @@ const App = () => {
 
       {/* Episodes Section */}
       <div className="episodes-section">
-        {hasSearched && episodes.length > 0 && (
+        {hasSearched && Array.isArray(episodes) && episodes.length > 0 && (
           <h2 className="results-heading">Results</h2>
         )}
 
