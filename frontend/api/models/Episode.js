@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const EpisodeSchema = new mongoose.Schema({
+const EpisodeSchema = new mongoose.Schema(
+  {
     title: { type: String, required: true },
     season: { type: Number, required: true },
     episode_number: { type: Number, required: true },
@@ -12,6 +13,8 @@ const EpisodeSchema = new mongoose.Schema({
     image_link: { type: String, required: true },
     youtube_link: { type: String, required: true },
     notes: { type: String, default: null },
-}, { collection: 'episodes' });
+  },
+  { collection: "episodes" },
+);
 
-module.exports = mongoose.model('Episode', EpisodeSchema);
+module.exports = mongoose.model("Episode", EpisodeSchema);
