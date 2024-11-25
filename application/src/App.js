@@ -277,7 +277,7 @@ const App = () => {
 
   useEffect(() => {
     fetchEpisodes();
-  }, [fetchEpisodes, page]); // Dependencies include `fetchEpisodes` and `page`
+  }, [fetchEpisodes, page]);
 
   return (
     <div className="App">

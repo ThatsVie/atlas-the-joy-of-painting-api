@@ -45,4 +45,3 @@ Your task is to design and build the backend database and API to support this fu
     - Subject matter.
     - Color palette.
 
-## Tasks
