@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Select from "react-select";
@@ -178,7 +178,8 @@ const App = () => {
   const [totalPages, setTotalPages] = useState(1); // Total number of pages
 
   // Fetch episodes based on filters and pagination
-  const fetchEpisodes = async () => {
+  const fetchEpisodes = useCallback(async () => {
+    if (!hasSearched) return; // Prevent fetching unless a search has been initiated
     setLoading(true);
     try {
       const params = {
@@ -187,9 +188,11 @@ const App = () => {
         subjects: selectedSubjects.map((opt) => opt.value).join(","),
         colors: selectedColors.map((opt) => opt.value).join(","),
         season: selectedSeason?.value || null,
-        page, // Include the current page for pagination
-        limit, // Include the limit per page
+        page, // current page for pagination
+        limit, // limit per page
       };
+
+      console.log("Fetching episodes with params:", params);
 
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/episodes`,
@@ -203,7 +206,16 @@ const App = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [
+    hasSearched,
+    selectedYears,
+    selectedMonths,
+    selectedSubjects,
+    selectedColors,
+    selectedSeason,
+    page,
+    limit,
+  ]);
 
   // Function to handle search
   const handleSearch = (e) => {
@@ -262,6 +274,10 @@ const App = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    fetchEpisodes();
+  }, [fetchEpisodes, page]); // Dependencies include `fetchEpisodes` and `page`
 
   return (
     <div className="App">
@@ -569,8 +585,7 @@ const App = () => {
           <button
             onClick={() => {
               if (page > 1) {
-                setPage(page - 1);
-                fetchEpisodes();
+                setPage(page - 1); // Trigger useEffect to fetch episodes
               }
             }}
             disabled={page === 1}
@@ -578,14 +593,16 @@ const App = () => {
           >
             Previous
           </button>
+
           <span>
+            {/* Display the current page and total pages */}
             Page {page} of {totalPages}
           </span>
+
           <button
             onClick={() => {
               if (page < totalPages) {
-                setPage(page + 1);
-                fetchEpisodes();
+                setPage(page + 1); // Trigger useEffect to fetch episodes
               }
             }}
             disabled={page === totalPages}

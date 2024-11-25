@@ -48,6 +48,8 @@ const getAllEpisodes = async (req, res) => {
 
     console.time("Query Execution Time");
 
+    console.log(`Pagination - Page: ${page}, Limit: ${limit}, Skip: ${skip}`);
+
     // Execute the query with pagination
     const episodes = await Episode.find(query)
       .select(
