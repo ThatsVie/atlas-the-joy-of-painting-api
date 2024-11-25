@@ -175,7 +175,7 @@ const App = () => {
   // Pagination state variables
   const [page, setPage] = useState(1); // Current page
   const [limit] = useState(12); // Items per page
-  const [totalPages, setTotalPages] = useState(1); // Total number of pages
+  const [totalPages, setTotalPages] = useState(0); // Total number of pages
 
   // Fetch episodes based on filters and pagination
   const fetchEpisodes = useCallback(async () => {

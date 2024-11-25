@@ -12,8 +12,21 @@ const PORT = process.env.PORT || 4000;
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
-  }),
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        process.env.FRONTEND_URL || "http://localhost:3000",
+        "http://localhost:3000",
+      ];
+
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  })
 );
 app.use(morgan("dev"));
 
@@ -31,7 +44,16 @@ app.get("/", (req, res) => {
 const episodesRouter = require("./routes/episodes");
 app.use("/episodes", episodesRouter);
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Error Handling Middleware for CORS Issues
+app.use((err, req, res, next) => {
+    if (err.name === "Error") {
+      res.status(400).json({ message: err.message });
+    } else {
+      next(err);
+    }
+  });
+  
+  // Start Server
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
