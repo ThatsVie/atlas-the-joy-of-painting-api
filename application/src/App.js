@@ -217,7 +217,6 @@ const App = () => {
     limit,
   ]);
 
-  // Function to handle search
   const handleSearch = (e) => {
     e.preventDefault();
     setHasSearched(true); // Mark as searched
@@ -225,7 +224,6 @@ const App = () => {
     fetchEpisodes();
   };
 
-  // Search by Season Only
   const handleSearchBySeason = async (e) => {
     e.preventDefault();
     setHasSearched(true);
@@ -255,7 +253,6 @@ const App = () => {
     }
   };
 
-  // Function to handle clearing all filters
   const handleClearAll = () => {
     setSelectedMonths([]);
     setSelectedSubjects([]);

@@ -38,7 +38,7 @@ body {
 
 /* Header Styling */
 .page-header {
-  position: relative; /* Ensure the pseudo-elements are positioned relative to the header */
+  position: relative; /* pseudo-elements are positioned relative to the header */
   text-align: center;
   padding: 20px;
   background: linear-gradient(
