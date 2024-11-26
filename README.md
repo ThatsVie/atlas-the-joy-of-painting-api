@@ -25,6 +25,7 @@ Explore the legacy of Bob Ross and his masterpiece series through an intuitive A
     - [Accessing the API](#accessing-the-api)
 6. [Process Narrative](#process-narrative)
 7. [Acknowledgements](#acknowledgements)
+8. [About the Developer](#about-the-developer)
 
 ---
 
@@ -328,4 +329,17 @@ Data courtesy of:
 - [FiveThirtyEight](https://github.com/fivethirtyeight/data/blob/master/bob-ross/elements-by-episode.csv)  
 - [jwilber](https://github.com/jwilber/Bob_Ross_Paintings/blob/master/data/bob_ross_paintings.csv)  
 
+## About the Developer
 
+Hi, I’m Vie! 😊 This project started as a school assignment to create an API, but I decided to run with it 🚀 and turn it into a full-stack application. The front end was optional, but I wanted to challenge myself and bring the project to life 🎨.
+
+Through this journey, I gained valuable experience with MongoDB and Vercel, and I’m incredibly proud of what I’ve accomplished 💪. I’m grateful for the opportunity to combine my love of coding with my admiration for Bob Ross and his ability to find joy in the process 🌈.
+
+“Go out on a limb — that’s where the fruit is.” 🍎 - Bob Ross
+
+With love, 
+❤️ Vie ❤️
+
+🌐 Check out more of my work:  
+- [GitHub](https://github.com/ThatsVie)  
+- [Portfolio](https://whatdoyouknowaboutlove.com/viepaula/)
