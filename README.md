@@ -1,11 +1,14 @@
 
 <div align="center">
 
-![Bob Ross Puggiewiggie](https://github.com/user-attachments/assets/5ffd4c1b-1c16-4639-8dda-09fb06ebbe9b)
+![BobRossPuggers](https://github.com/user-attachments/assets/40a72e16-7e6c-4ed8-a8e5-0fd0acf4b91e)
+
 
 # The Joy of Painting API and SPA
 
 Explore the legacy of Bob Ross and his masterpiece series through an intuitive API and interactive web application.
+
+🌳 "We don't make mistakes, just happy little accidents." 🎨
 
 **Live Project:** [The Joy of Painting API and SPA](https://atlas-the-joy-of-painting-api-whkc.vercel.app/)
 
@@ -22,6 +25,7 @@ Explore the legacy of Bob Ross and his masterpiece series through an intuitive A
     - [Accessing the API](#accessing-the-api)
 5. [Process Narrative](#process-narrative)
 6. [Live Project](#live-project)
+7. [Acknowledgements](#acknowledgements)
 
 ---
 
@@ -51,6 +55,7 @@ The project demonstrates a full-stack implementation, featuring data processing 
   - **Season**: Quickly locate episodes from a specific season.
 - **Pagination**: Navigate between pages of results.
 - **Responsive Design**: Works across devices for a seamless experience.
+- **Quote Carousel**: A dynamic carousel displays inspirational quotes from Bob Ross to immerse users in the spirit of *The Joy of Painting*.
 
 ---
 
@@ -180,11 +185,20 @@ The backend API is accessible at:
 
 4. **Deployment**:
    - Both backend and frontend were deployed using **Vercel**.
-   - The backend resides in the `application/backend` directory.
    - Environment variables were configured for both development and production.
+   - Backend deployed at: https://atlas-the-joy-of-painting-api.vercel.app/
+   - Frontend deployed at: https://atlas-the-joy-of-painting-api-whkc.vercel.app/
 
 
 ## Live Project
 Explore the project: [In Honor of Bob Ross - The Joy of Painting Episodes](https://atlas-the-joy-of-painting-api-whkc.vercel.app/)
+
+## Acknowledgements
+
+Special thanks to **Bob Ross** for inspiring this creative journey.  
+
+Data courtesy of:  
+- [FiveThirtyEight](https://github.com/fivethirtyeight/data/blob/master/bob-ross/elements-by-episode.csv)  
+- [jwilber](https://github.com/jwilber/Bob_Ross_Paintings/blob/master/data/bob_ross_paintings.csv)  
 
 
