@@ -53,9 +53,31 @@ The project demonstrates a full-stack implementation, featuring data processing 
   - **Subjects**: Discover episodes with specific painted elements.
   - **Colors**: Find episodes using particular paint colors.
   - **Season**: Quickly locate episodes from a specific season.
+ 
+    ![Search](https://github.com/user-attachments/assets/5949019a-6505-46cd-8d55-a63535e1820d)
+
 - **Pagination**: Navigate between pages of results.
-- **Responsive Design**: Works across devices for a seamless experience.
+  <div align="center">
+
+    ![pagination](https://github.com/user-attachments/assets/28e012d5-d2f3-4a7e-9b0c-1766c95254a1)
+    </div>
+
 - **Quote Carousel**: A dynamic carousel displays inspirational quotes from Bob Ross to immerse users in the spirit of *The Joy of Painting*.
+    <div align="center">
+    
+    ![quote carousel](https://github.com/user-attachments/assets/0114bd7c-634d-41a5-b60c-4e3620289571)
+
+
+    </div>
+
+- **Formatted Episode Cards**: Each episode is displayed as a beautifully formatted card, showcasing essential details such as the episode title, season, episode number, air date, subjects, colors, and link to the corresponding Yotube video.
+    <div align="center">
+
+    ![episodecard](https://github.com/user-attachments/assets/ef85dade-c259-48c3-bf84-0ff40eb39298)
+
+    </div>
+
+- **Responsive Design**: Works across devices for a seamless experience.
 
 ---
 
@@ -125,7 +147,38 @@ Contains datasets used during development.
    - No episodes are shown until filters are applied.
    - Clear filters at any time using the **Clear All** button.
 
----
+#### Example Searches
+<details>
+<summary>Some possible search combinations</summary>
+
+- **Search for all episodes from the year 1983 (Page 1, 12 episodes per page):**  
+![1983](https://github.com/user-attachments/assets/64a5d42b-a6da-4c0f-bd8e-bec831f6537b)
+
+- **Search for episodes from January 1984:**  
+![1984January](https://github.com/user-attachments/assets/a8f92f78-4118-4703-a0b9-7e34e86079d6)
+
+- **Search for episodes featuring "TREES" painted in 1993 (Page 1, 12 episodes per page):**
+![1993Trees](https://github.com/user-attachments/assets/a0a03ff7-d286-466e-8d98-2bddad4c6483)
+
+- **Search for episodes where "Phthalo Green" was used in 1983 (Page 2):**
+![1983PhthaloGreen](https://github.com/user-attachments/assets/7b3ec51f-fca6-45f9-b81d-1b518784369f)
+
+- **Search for episodes aired in February across all years featuring "RIVER" (Page 1, 12 episodes per page):**
+![FebruaryRiver](https://github.com/user-attachments/assets/4f3ded2c-40a1-42f1-8b35-d624fa8b9c13)
+
+- **Search for episodes from December 1990 that feature "TREE" and use "Sap Green":**
+**Note:** This search will return no results as no episode meets all these criteria.
+![noresults](https://github.com/user-attachments/assets/879f4517-3e21-42b1-867a-6716acfe57f5)
+
+- **Search for all episodes from Season 1 (Page 1):**
+![Season1Page1](https://github.com/user-attachments/assets/7582636a-38ea-4a95-8974-402b31dc7cd2)
+
+- **Search for all episodes from Season 15 (Page 2):**
+![Season15Page2](https://github.com/user-attachments/assets/a2cb7afe-2209-4ade-b22c-feb4607cf347)
+
+
+</details>
+
 
 ### Accessing the API
 The backend API is accessible at:
@@ -146,7 +199,7 @@ The backend API is accessible at:
 - **Query episodes featuring "TREES" painted in 1993 (Page 1, 12 episodes per page):**  
   https://atlas-the-joy-of-painting-api.vercel.app/episodes?years=1993&subjects=TREES&page=1&limit=12
 
-- **Query episodes where "Phthalo Green" was used in 1983 (Page 2, 12 episodes per page):**  
+- **Query episodes where "Phthalo Green" was used in 1983 (Page 2):**  
   https://atlas-the-joy-of-painting-api.vercel.app/episodes?years=1983&colors=Phthalo+Green&page=2&limit=12
 
 - **Query episodes aired in February across all years featuring "RIVER" (Page 1, 12 episodes per page):**  
@@ -172,10 +225,10 @@ The backend API is accessible at:
 <details>
 <summary>Filtering by Season (1-31)</summary>
 
-- **Query all episodes from Season 1:**  
+- **Query all episodes from Season 1 (Page 1):**  
   https://atlas-the-joy-of-painting-api.vercel.app/episodes?season=1
 
-- **Query all episodes from Season 15 (Page 2, 12 episodes per page):**  
+- **Query all episodes from Season 15 (Page 2):**  
   https://atlas-the-joy-of-painting-api.vercel.app/episodes?season=15&page=2&limit=12  
 
   **Note:** This query will only return one episode because each season contains exactly 13 episodes. Since pagination is set to display 12 episodes per page, Page 1 will include the first 12 episodes, and Page 2 will display the remaining single episode.  
