@@ -1,7 +1,6 @@
 
 <div align="center">
 
-
 # The Joy of Painting API and SPA
 
 Explore the legacy of Bob Ross and his masterpiece series through an intuitive API and interactive web application.
@@ -19,12 +18,12 @@ Explore the legacy of Bob Ross and his masterpiece series through an intuitive A
 ## Table of Contents
 1. [Overview](#overview)
 2. [Features](#features)
-3. [File Descriptions](#file-descriptions)
-4. [Usage Instructions](#usage-instructions)
+3. [Modified UML Class Diagram](#modified-uml-class-diagram)
+4. [File Descriptions](#file-descriptions)
+5. [Usage Instructions](#usage-instructions)
     - [Viewing Episodes](#viewing-episodes)
     - [Accessing the API](#accessing-the-api)
-5. [Process Narrative](#process-narrative)
-6. [Live Project](#live-project)
+6. [Process Narrative](#process-narrative)
 7. [Acknowledgements](#acknowledgements)
 
 ---
@@ -80,6 +79,24 @@ The project demonstrates a full-stack implementation, featuring data processing 
 - **Responsive Design**: Works across devices for a seamless experience.
 
 ---
+## Modified UML Class Diagram
+
+<div align="center">
+    
+![Modified UML](https://github.com/user-attachments/assets/f0573e5b-6dd4-48c2-b375-47a83f47a6db)
+
+</div>
+
+
+- **Data Relationships**:
+  - The `colors` and `subjects` fields are embedded arrays, meaning they are stored directly within the `episodes` collection. These are not references to other collections, so there are no traditional "many-to-many" relationships.
+- **Storage Context**:
+  - This structure is optimized for MongoDB, leveraging its ability to handle arrays and nested data without requiring joins as in a relational database.
+- **Design Purpose**:
+  - The schema is tailored to store metadata about episodes and their paintings efficiently, providing all relevant information in a single document for fast access.
+
+---
+
 
 ## File Descriptions
 
@@ -302,9 +319,6 @@ The backend API is accessible at:
    - Backend deployed at: https://atlas-the-joy-of-painting-api.vercel.app/
    - Frontend deployed at: https://atlas-the-joy-of-painting-api-whkc.vercel.app/
 
-
-## Live Project
-Explore the project: [In Honor of Bob Ross - The Joy of Painting Episodes](https://atlas-the-joy-of-painting-api-whkc.vercel.app/)
 
 ## Acknowledgements
 
