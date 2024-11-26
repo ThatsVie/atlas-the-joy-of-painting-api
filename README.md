@@ -73,7 +73,7 @@ The project demonstrates a full-stack implementation, featuring data processing 
 - **Formatted Episode Cards**: Each episode is displayed as a beautifully formatted card, showcasing essential details such as the episode title, season, episode number, air date, subjects, colors, and link to the corresponding Yotube video.
     <div align="center">
 
-    ![episodecard](https://github.com/user-attachments/assets/ef85dade-c259-48c3-bf84-0ff40eb39298)
+    ![episodecard](https://github.com/user-attachments/assets/b23478a2-4d9f-49e7-8d17-dcf8d44e30e3)
 
     </div>
 
