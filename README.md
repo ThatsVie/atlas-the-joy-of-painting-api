@@ -9,7 +9,7 @@ Explore the legacy of Bob Ross and his masterpiece series through an intuitive A
 
 ![localhost_3000_](https://github.com/user-attachments/assets/61a8c694-c376-45b7-937e-c877ade8a97c)
 
-**Live Project:** [The Joy of Painting API and SPA](https://atlas-the-joy-of-painting-api-whkc.vercel.app/)
+**Live Website:** [The Joy of Painting API and SPA](https://atlas-the-joy-of-painting-api-whkc.vercel.app/)
 
 </div>
 
