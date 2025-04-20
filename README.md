@@ -344,4 +344,4 @@ With love,
 
 🌐 Check out more of my work:  
 - [GitHub](https://github.com/ThatsVie)  
-- [Portfolio](https://whatdoyouknowaboutlove.com/viepaula/)
+- [Portfolio](https://whatdoyouknowaboutlove.com/viep)
