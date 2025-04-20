@@ -638,7 +638,7 @@ const App = () => {
 
           <li>
             <a
-              href="https://whatdoyouknowaboutlove.com/viepaula/"
+              href="https://whatdoyouknowaboutlove.com/viep/"
               target="_blank"
               rel="noopener noreferrer"
             >
